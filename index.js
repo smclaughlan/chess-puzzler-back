@@ -1,12 +1,13 @@
-const express = require("express");
+const express = require('express');
 const app = express();
+// eslint-disable-next-line new-cap
 const router = express.Router();
 // const cors = require("cors");
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("<h1>hello world</h1>");
+app.get('/', (req, res) => {
+  res.send('<h1>hello world</h1>');
 });
 
 const port = process.env.PORT || 5000;
