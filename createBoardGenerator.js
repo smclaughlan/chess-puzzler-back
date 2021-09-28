@@ -124,7 +124,7 @@ function createBoardGenerator() {
    * @param {Number} maxTurns
    * @return {Object} board that has checkmate within maxTurns for color
    */
-  function generateBoardWithCheckmate(pieceConfig, color = 'w', maxTurns = 20) {
+  function generateBoardWithCheckmate(pieceConfig, color = 'w', maxTurns = 10) {
     let foundBoard;
     while (!foundBoard) {
       console.log('Generating new board.');
