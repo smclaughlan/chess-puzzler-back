@@ -1,4 +1,5 @@
 const {createBoardGenerator} = require('./createBoardGenerator');
+const {randNum} = require('./randNum');
 
 let boardCount = 0;
 while (boardCount < 2) {
@@ -53,14 +54,4 @@ function updateStoredBoards(newBoard) {
           });
     }
   });
-}
-
-/**
- * Returns random number inclusive of min and max.
- * @param {Number} min
- * @param {Number} max
- * @return {Number}
- */
-function randNum(min = 0, max = 10) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
