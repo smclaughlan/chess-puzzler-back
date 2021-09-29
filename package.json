@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/smclaughlan/chess-puzzler-back#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.21.21",
     "objection": "^2.2.16",

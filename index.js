@@ -3,9 +3,10 @@ const app = express();
 const fs = require('fs');
 // eslint-disable-next-line new-cap
 // const router = express.Router();
-// const cors = require("cors");
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 let puzzleBoards = [];
 
