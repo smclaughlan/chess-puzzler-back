@@ -150,7 +150,8 @@ function createBoardGenerator() {
           // returning checkmate board found for color
           if (currTurn < 4) break;
           foundBoard = originalBoard;
-          return originalBoard;
+          return {'findCheckmateWithin': currTurn,
+            'puzzleBoard': originalBoard};
         }
         // if currTurns > maxTurns, failure, and generate a new board,
         currTurn++;
