@@ -1,5 +1,6 @@
 const {createBoardGenerator} = require('./createBoardGenerator');
 const {randNum} = require('./randNum');
+const fs = require('fs');
 
 let boardCount = 0;
 while (boardCount < 2) {
@@ -19,13 +20,12 @@ while (boardCount < 2) {
         'w_q': randNum(0, 1),
         'b_q': randNum(0, 1),
         // rooks
-        // 'w_r': randNum(0, 2),
-        // 'b_r': randNum(0, 2),
+        'w_r': randNum(0, 2),
+        'b_r': randNum(0, 2),
         // kings
         'w_k': 1,
         'b_k': 1,
       });
-  puzzleBoards.push(testBoard);
   updateStoredBoards(testBoard);
   boardCount++;
   console.log('boardCount: ', boardCount);
@@ -33,7 +33,8 @@ while (boardCount < 2) {
 
 /**
  * Save a board to the json file.
- * @param {Object} newBoard - board to add to stored files
+ * @param {Object} newBoard - {'findCheckmateWithin': turnNumber,
+ * 'puzzleBoard': boardObj}
  */
 function updateStoredBoards(newBoard) {
   fs.readFile('./storedBoards.json', 'utf8', (err, data) => {
