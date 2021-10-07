@@ -3,16 +3,16 @@ const {randNum} = require('./randNum');
 const fs = require('fs');
 
 let boardCount = 0;
-while (boardCount < 2) {
+while (boardCount < 1) {
   const boardGen = createBoardGenerator();
   const testBoard = boardGen.generateBoardWithCheckmate(
       {
         // pawns
-        'w_p': randNum(0, 5),
-        'b_p': randNum(0, 5),
+        'w_p': randNum(0, 3),
+        'b_p': randNum(0, 3),
         // knights
         'w_n': randNum(0, 2),
-        'b_n': randNum(0, 2),
+        'b_n': randNum(0, 1),
         // bishops
         // 'w_b': randNum(0, 2),
         // 'b_b': randNum(0, 2),
@@ -21,7 +21,7 @@ while (boardCount < 2) {
         'b_q': randNum(0, 1),
         // rooks
         'w_r': randNum(0, 2),
-        'b_r': randNum(0, 2),
+        'b_r': randNum(0, 1),
         // kings
         'w_k': 1,
         'b_k': 1,
