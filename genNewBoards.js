@@ -14,8 +14,8 @@ while (boardCount < 1) {
         'w_n': randNum(0, 2),
         'b_n': randNum(0, 1),
         // bishops
-        // 'w_b': randNum(0, 2),
-        // 'b_b': randNum(0, 2),
+        'w_b': randNum(0, 2),
+        'b_b': randNum(0, 2),
         // queens
         'w_q': randNum(0, 1),
         'b_q': randNum(0, 1),
