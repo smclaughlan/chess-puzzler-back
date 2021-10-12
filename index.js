@@ -41,7 +41,7 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
 
-app.post('/move', (req, res) => {
+app.post('/move', async (req, res) => {
   const boardJson = req.body;
   const newBoard = createBoard();
   const boardWithPieces = boardJson.board;
@@ -55,26 +55,9 @@ app.post('/move', (req, res) => {
     }
   }
 
-  let returnBoard;
-
-  /**
-   * Solve for the puzzle board sent to server,
-   * then call the sendRes() to send reply move.
-   */
-  async function solveForPuzzle() {
-    const puzzleSolver = await createSolver(newBoard);
-    await puzzleSolver.buildMoveTree(newBoard, 'b', 0, 3);
-    await puzzleSolver.buildBestMoves(newBoard, 'b');
-    returnBoard = await JSON.stringify({move: newBoard.bestMoveBoard});
-    await sendRes();
-  }
-
-  /**
-   * Sends response
-   */
-  async function sendRes() {
-    res.write(returnBoard);
-  }
-
-  solveForPuzzle();
+  const puzzleSolver = createSolver(newBoard);
+  puzzleSolver.buildMoveTree(newBoard, 'b', 0, 3);
+  puzzleSolver.buildBestMoves(newBoard, 'b');
+  const returnBoard = {move: newBoard.bestMoveBoard};
+  res.json(returnBoard);
 });
