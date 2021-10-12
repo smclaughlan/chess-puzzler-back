@@ -1,3 +1,5 @@
+const {createBoard} = require('./createBoard');
+const {createSolver} = require('./createSolver');
 const {randNum} = require('./randNum');
 const express = require('express');
 const app = express();
@@ -40,5 +42,39 @@ app.listen(port, () => {
 });
 
 app.post('/move', (req, res) => {
-  console.log(req);
+  const boardJson = req.body;
+  const newBoard = createBoard();
+  const boardWithPieces = boardJson.board;
+  // Iterate over all positions and add pieces to newBoard
+  for (let x = 0; x < 8; x++) {
+    for (let y = 0; y < 8; y++) {
+      const posOrPiece = boardWithPieces[x][y];
+      if (posOrPiece !== '____') {
+        newBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+      }
+    }
+  }
+
+  let returnBoard;
+
+  /**
+   * Solve for the puzzle board sent to server,
+   * then call the sendRes() to send reply move.
+   */
+  async function solveForPuzzle() {
+    const puzzleSolver = await createSolver(newBoard);
+    await puzzleSolver.buildMoveTree(newBoard, 'b', 0, 3);
+    await puzzleSolver.buildBestMoves(newBoard, 'b');
+    returnBoard = await JSON.stringify({move: newBoard.bestMoveBoard});
+    await sendRes();
+  }
+
+  /**
+   * Sends response
+   */
+  async function sendRes() {
+    res.write(returnBoard);
+  }
+
+  solveForPuzzle();
 });
