@@ -58,6 +58,21 @@ app.post('/move', async (req, res) => {
   const puzzleSolver = createSolver(newBoard);
   puzzleSolver.buildMoveTree(newBoard, 'b', 0, 3);
   puzzleSolver.buildBestMoves(newBoard, 'b');
-  const returnBoard = {move: newBoard.bestMoveBoard};
-  res.json(returnBoard);
+  let moveReply;
+  if (!newBoard.bestMoveBoard) {
+    // There's no bestMoveBoard because black cannot move
+    // If it's checkmate, {checkmated: 'b'}
+    // else, {stalemate: true}
+    if (newBoard.isInCheckmate('b')) {
+      moveReply = {checkmated: 'b'};
+    } else if (newBoard.isInCheckmate('w')) {
+      moveReply = {checkmated: 'w'};
+    } else {
+      moveReply = {stalemate: true};
+    }
+  } else {
+    moveReply = {move: newBoard.bestMoveBoard};
+  }
+
+  res.json(moveReply);
 });
