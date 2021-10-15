@@ -8,20 +8,20 @@ while (boardCount < 1) {
   const testBoard = boardGen.generateBoardWithCheckmate(
       {
         // pawns
-        'w_p': randNum(0, 3),
-        'b_p': randNum(0, 3),
+        'w_p': 2,
+        'b_p': 2,
         // knights
-        'w_n': randNum(0, 2),
-        'b_n': randNum(0, 1),
+        'w_n': 2,
+        'b_n': 2,
         // bishops
-        'w_b': randNum(0, 2),
-        'b_b': randNum(0, 2),
+        'w_b': 1,
+        'b_b': 0,
         // queens
-        'w_q': randNum(0, 1),
-        'b_q': randNum(0, 1),
+        'w_q': 0,
+        'b_q': 0,
         // rooks
-        'w_r': randNum(0, 2),
-        'b_r': randNum(0, 1),
+        'w_r': 0,
+        'b_r': 0,
         // kings
         'w_k': 1,
         'b_k': 1,

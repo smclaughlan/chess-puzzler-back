@@ -130,6 +130,11 @@ function createBoardGenerator() {
       console.log('Generating new board.');
       // generate a board
       const originalBoard = this.generateBoard(pieceConfig);
+
+      // If there is a check for black on the first board
+      // position, skip this board.
+      if (originalBoard.isInCheck('b')) continue;
+
       let testBoard = originalBoard.copyBoard();
       // build its move tree and best moves / 'play' the game out
       let currTurn = 0;
