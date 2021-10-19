@@ -5,30 +5,34 @@ const fs = require('fs');
 let boardCount = 0;
 while (boardCount < 1) {
   const boardGen = createBoardGenerator();
-  const testBoard = boardGen.generateBoardWithCheckmate(
-      {
-        // pawns
-        'w_p': 2,
-        'b_p': 2,
-        // knights
-        'w_n': 2,
-        'b_n': 2,
-        // bishops
-        'w_b': 1,
-        'b_b': 0,
-        // queens
-        'w_q': 0,
-        'b_q': 0,
-        // rooks
-        'w_r': 0,
-        'b_r': 0,
-        // kings
-        'w_k': 1,
-        'b_k': 1,
-      });
-  updateStoredBoards(testBoard);
-  boardCount++;
-  console.log('boardCount: ', boardCount);
+  try {
+    const testBoard = boardGen.generateBoardWithCheckmate(
+        {
+          // pawns
+          'w_p': randNum(1, 5),
+          'b_p': randNum(1, 5),
+          // knights
+          'w_n': randNum(1, 2),
+          'b_n': 1,
+          // bishops
+          'w_b': randNum(1, 2),
+          'b_b': randNum(0, 1),
+          // queens
+          'w_q': 0,
+          'b_q': 0,
+          // rooks
+          'w_r': randNum(1, 2),
+          'b_r': randNum(0, 1),
+          // kings
+          'w_k': 1,
+          'b_k': 1,
+        });
+    updateStoredBoards(testBoard);
+    boardCount++;
+    console.log('boardCount: ', boardCount);
+  } catch {
+    console.log('Error');
+  }
 }
 
 /**
