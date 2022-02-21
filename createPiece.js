@@ -1,4 +1,4 @@
-const {pieceValue} = require('./pieceValue');
+const { pieceValue } = require("./pieceValue");
 
 const wPawnMoves = [
   {
@@ -298,24 +298,24 @@ function createPiece(pieceType, color, x, y) {
   let moves = {};
   const position = [x, y];
 
-  if (pieceType === 'p') {
-    if (color === 'w') {
+  if (pieceType === "p") {
+    if (color === "w") {
       moves = wPawnMoves;
     } else {
       moves = bPawnMoves;
     }
-  } else if (pieceType === 'k') {
+  } else if (pieceType === "k") {
     moves = kMoves;
-  } else if (pieceType === 'b') {
+  } else if (pieceType === "b") {
     moves = bMoves;
-  } else if (pieceType === 'r') {
+  } else if (pieceType === "r") {
     moves = rMoves;
-  } else if (pieceType === 'q') {
+  } else if (pieceType === "q") {
     moves = qMoves;
-  } else if (pieceType === 'n') {
+  } else if (pieceType === "n") {
     moves = nMoves;
   } else {
-    console.log('Invalid pieceType in createPiece!');
+    console.log("Invalid pieceType in createPiece!");
   }
 
   /**
@@ -344,7 +344,7 @@ function createPiece(pieceType, color, x, y) {
     // TODO Refactor below, DRY.
 
     // Check pawn moves
-    if (this.pieceType === 'p') {
+    if (this.pieceType === "p") {
       // pawns have canCapture: false on the move ahead
       // and mustCapture: true on moves to capture diagonally
       this.moves.forEach((move) => {
@@ -353,7 +353,7 @@ function createPiece(pieceType, color, x, y) {
         const endPosX = startX + relativeX;
         const endPosY = startY + relativeY;
         const endPosOnBoard = bd.board[endPosX]?.[endPosY];
-        const isEmptyEndPos = endPosOnBoard === '____';
+        const isEmptyEndPos = endPosOnBoard === "____";
         const isOpponentPiece =
           !isEmptyEndPos &&
           endPosOnBoard !== undefined &&
@@ -371,13 +371,28 @@ function createPiece(pieceType, color, x, y) {
             if (checkForCheck) {
               const newBoard = bd.copyBoard();
               newBoard.removePiece(startX, startY);
-              newBoard.addPiece(endPosX, endPosY, this.color, this.pieceType);
-              const moveCreatesCheck = newBoard.isInCheck(this.color);
+              newBoard.addPiece(
+                endPosX,
+                endPosY,
+                this.color,
+                this.pieceType
+              );
+              const moveCreatesCheck = newBoard.isInCheck(
+                this.color
+              );
               if (!moveCreatesCheck) {
-                validMoves.push({endPosX, endPosY, notAttack: true});
+                validMoves.push({
+                  endPosX,
+                  endPosY,
+                  notAttack: true,
+                });
               }
             } else {
-              validMoves.push({endPosX, endPosY, notAttack: true});
+              validMoves.push({
+                endPosX,
+                endPosY,
+                notAttack: true,
+              });
             }
           }
         } else if (move.mustCapture === true) {
@@ -393,19 +408,29 @@ function createPiece(pieceType, color, x, y) {
             if (checkForCheck) {
               const newBoard = bd.copyBoard();
               newBoard.removePiece(startX, startY);
-              newBoard.addPiece(endPosX, endPosY, this.color, this.pieceType);
-              const moveCreatesCheck = newBoard.isInCheck(this.color);
+              newBoard.addPiece(
+                endPosX,
+                endPosY,
+                this.color,
+                this.pieceType
+              );
+              const moveCreatesCheck = newBoard.isInCheck(
+                this.color
+              );
               if (!moveCreatesCheck) {
-                validMoves.push({endPosX, endPosY});
+                validMoves.push({ endPosX, endPosY });
               }
             } else {
-              validMoves.push({endPosX, endPosY});
+              validMoves.push({ endPosX, endPosY });
             }
           }
         }
       });
       // Check King moves
-    } else if (this.pieceType === 'k' || this.pieceType === 'n') {
+    } else if (
+      this.pieceType === "k" ||
+      this.pieceType === "n"
+    ) {
       // No special concerns with King moves.
       this.moves.forEach((move) => {
         const [startX, startY] = this.position;
@@ -413,7 +438,7 @@ function createPiece(pieceType, color, x, y) {
         const endPosX = startX + relativeX;
         const endPosY = startY + relativeY;
         const endPosOnBoard = bd.board[endPosX]?.[endPosY];
-        const isEmptyEndPos = endPosOnBoard === '____';
+        const isEmptyEndPos = endPosOnBoard === "____";
         const isOpponentPiece =
           !isEmptyEndPos &&
           endPosOnBoard !== undefined &&
@@ -430,19 +455,28 @@ function createPiece(pieceType, color, x, y) {
           if (checkForCheck) {
             const newBoard = bd.copyBoard();
             newBoard.removePiece(startX, startY);
-            newBoard.addPiece(endPosX, endPosY, this.color, this.pieceType);
-            const moveCreatesCheck = newBoard.isInCheck(this.color);
+            newBoard.addPiece(
+              endPosX,
+              endPosY,
+              this.color,
+              this.pieceType
+            );
+            const moveCreatesCheck = newBoard.isInCheck(
+              this.color
+            );
             if (!moveCreatesCheck) {
-              validMoves.push({endPosX, endPosY});
+              validMoves.push({ endPosX, endPosY });
             }
           } else {
-            validMoves.push({endPosX, endPosY});
+            validMoves.push({ endPosX, endPosY });
           }
         }
       });
-    } else if (this.pieceType === 'b' ||
-      this.pieceType === 'r' ||
-      this.pieceType === 'q') {
+    } else if (
+      this.pieceType === "b" ||
+      this.pieceType === "r" ||
+      this.pieceType === "q"
+    ) {
       // Bishops have incremental movements.
       // Their moves.move will be an array of nested arrays
       // of moves that step further away from the start position
@@ -452,16 +486,16 @@ function createPiece(pieceType, color, x, y) {
         // incrementalMove variable here refers to
         // obj moveTo: [[1,1], [2,2] ...etc]
         // Change to the actual array
-        incrementalMove = incrementalMove['moveTo'];
+        incrementalMove = incrementalMove["moveTo"];
         const [startX, startY] = this.position;
-        for (let i = 0; i < incrementalMove.length; i++) {
+        for (const incrementalStep of incrementalMove) {
           // incrementalStep = [1,1] etc
-          const incrementalStep = incrementalMove[i];
           const [relativeX, relativeY] = incrementalStep;
           const endPosX = startX + relativeX;
           const endPosY = startY + relativeY;
-          const endPosOnBoard = bd.board[endPosX]?.[endPosY];
-          const isEmptyEndPos = endPosOnBoard === '____';
+          const endPosOnBoard =
+            bd.board[endPosX]?.[endPosY];
+          const isEmptyEndPos = endPosOnBoard === "____";
           if (isEmptyEndPos) {
             /*
             Good so far.
@@ -474,13 +508,20 @@ function createPiece(pieceType, color, x, y) {
             if (checkForCheck) {
               const newBoard = bd.copyBoard();
               newBoard.removePiece(startX, startY);
-              newBoard.addPiece(endPosX, endPosY, this.color, this.pieceType);
-              const moveCreatesCheck = newBoard.isInCheck(this.color);
+              newBoard.addPiece(
+                endPosX,
+                endPosY,
+                this.color,
+                this.pieceType
+              );
+              const moveCreatesCheck = newBoard.isInCheck(
+                this.color
+              );
               if (!moveCreatesCheck) {
-                validMoves.push({endPosX, endPosY});
+                validMoves.push({ endPosX, endPosY });
               }
             } else {
-              validMoves.push({endPosX, endPosY});
+              validMoves.push({ endPosX, endPosY });
             }
           } else {
             // Now we've hit undefined, friendly piece, or opponent piece
@@ -488,8 +529,10 @@ function createPiece(pieceType, color, x, y) {
             // after this
 
             // But if it's an opponent piece, we'll add it as valid move
-            if (endPosOnBoard !== undefined &&
-              endPosOnBoard.color !== this.color) {
+            if (
+              endPosOnBoard !== undefined &&
+              endPosOnBoard.color !== this.color
+            ) {
               /*
               Good so far.
               * Copy the board.
@@ -501,13 +544,20 @@ function createPiece(pieceType, color, x, y) {
               if (checkForCheck) {
                 const newBoard = bd.copyBoard();
                 newBoard.removePiece(startX, startY);
-                newBoard.addPiece(endPosX, endPosY, this.color, this.pieceType);
-                const moveCreatesCheck = newBoard.isInCheck(this.color);
+                newBoard.addPiece(
+                  endPosX,
+                  endPosY,
+                  this.color,
+                  this.pieceType
+                );
+                const moveCreatesCheck = newBoard.isInCheck(
+                  this.color
+                );
                 if (!moveCreatesCheck) {
-                  validMoves.push({endPosX, endPosY});
+                  validMoves.push({ endPosX, endPosY });
                 }
               } else {
-                validMoves.push({endPosX, endPosY});
+                validMoves.push({ endPosX, endPosY });
               }
             }
             break;
@@ -530,11 +580,14 @@ function createPiece(pieceType, color, x, y) {
     Return true if end pos is on opponent king.
     */
     const validMoves = this.getValidMoves(bd, false);
-    for (let i = 0; i < validMoves.length; i++) {
-      const {endPosX, endPosY, notAttack} = validMoves[i];
+    for (const move of validMoves) {
+      const { endPosX, endPosY, notAttack } = move;
       if (!notAttack) {
         const endPos = bd.board[endPosX][endPosY];
-        if (endPos?.pieceType === 'k' && endPos?.color !== this.color) {
+        if (
+          endPos?.pieceType === "k" &&
+          endPos?.color !== this.color
+        ) {
           return true;
         }
       }
@@ -552,9 +605,8 @@ function createPiece(pieceType, color, x, y) {
   function isAttackingPosition(bd, posArr) {
     const [x, y] = posArr;
     const validMoves = this.getValidMoves(bd, true);
-    for (let i = 0; i < validMoves.length; i++) {
-      const move = validMoves[i];
-      const {endPosX, endPosY, notAttack} = move;
+    for (const move of validMoves) {
+      const { endPosX, endPosY, notAttack } = move;
       if (notAttack === true) continue;
       if (x === endPosX && y === endPosY) return true;
     }
@@ -565,12 +617,12 @@ function createPiece(pieceType, color, x, y) {
     color,
     moves,
     pieceType,
-    'pieceValue': pieceValue[pieceType],
+    pieceValue: pieceValue[pieceType],
     position,
     getValidMoves,
     isAttackingOpponentKing,
     isAttackingPosition,
-    'toString': function() {
+    toString: function () {
       return `${this.color}_${this.pieceType}_`;
     },
   };
