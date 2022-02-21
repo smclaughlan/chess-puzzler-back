@@ -1,4 +1,4 @@
-const {createPiece} = require('./createPiece');
+const { createPiece } = require("./createPiece");
 
 /**
  * Returns a new board.
@@ -7,84 +7,84 @@ const {createPiece} = require('./createPiece');
 function createBoard() {
   const board = [
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
     [
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
-      '____',
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
+      "____",
     ],
   ];
 
@@ -103,16 +103,21 @@ function createBoard() {
    */
   function addPiece(x, y, color, pieceType) {
     if (this.board[x] === undefined) {
-      console.log('this.board: ', this.board);
-      console.log('x: ', x);
-      console.log('y: ', y);
+      console.log("this.board: ", this.board);
+      console.log("x: ", x);
+      console.log("y: ", y);
     }
     if (this.board[x][y] === undefined) {
-      console.log('Invalid placement of piece. Piece not added.');
+      console.log(
+        "Invalid placement of piece. Piece not added."
+      );
       return;
     }
 
-    if (this.board[x][y] !== undefined && this.board[x][y] !== '____') {
+    if (
+      this.board[x][y] !== undefined &&
+      this.board[x][y] !== "____"
+    ) {
       // We're adding into a position with a piece
       // so remove that piece first.
       this.removePiece(x, y);
@@ -120,11 +125,11 @@ function createBoard() {
 
     const piece = createPiece(pieceType, color, x, y);
     this.board[x][y] = piece;
-    if (color === 'w') {
+    if (color === "w") {
       this.wPieces.push(piece);
       this.wScore += piece.pieceValue;
       this.bScore -= piece.pieceValue;
-    } else if (color === 'b') {
+    } else if (color === "b") {
       this.bPieces.push(piece);
       this.wScore -= piece.pieceValue;
       this.bScore += piece.pieceValue;
@@ -141,9 +146,13 @@ function createBoard() {
     for (let x = 0; x < this.board.length; x++) {
       for (let y = 0; y < this.board[x].length; y++) {
         const prevBoardPiece = this.board[x][y];
-        if (prevBoardPiece !== '____') {
+        if (prevBoardPiece !== "____") {
           newBoard.addPiece(
-              x, y, prevBoardPiece.color, prevBoardPiece.pieceType);
+            x,
+            y,
+            prevBoardPiece.color,
+            prevBoardPiece.pieceType
+          );
         }
       }
     }
@@ -172,7 +181,7 @@ function createBoard() {
   function getScore() {
     const wScore = this.wScore;
     const bScore = this.bScore;
-    return {wScore, bScore};
+    return { wScore, bScore };
   }
 
   /**
@@ -182,13 +191,12 @@ function createBoard() {
    */
   function isInCheck(color) {
     let pieces;
-    if (color === 'w') {
+    if (color === "w") {
       pieces = this.bPieces;
-    } else if (color === 'b') {
+    } else if (color === "b") {
       pieces = this.wPieces;
     }
-    for (let i = 0; i < pieces.length; i++) {
-      const piece = pieces[i];
+    for (const piece of pieces) {
       if (piece.isAttackingOpponentKing(this)) {
         return true;
       }
@@ -202,20 +210,15 @@ function createBoard() {
    * @return {Boolean}
    */
   function isInCheckmate(color) {
-    // TODO account for friendly pieces being able to remove attacking
-    // pieces on opponent color side
-
     // get the king for the correct side
     let king;
-    if (color === 'w') {
-      for (let i = 0; i < this.wPieces.length; i++) {
-        const piece = this.wPieces[i];
-        if (piece.pieceType === 'k') king = piece;
+    if (color === "w") {
+      for (const piece of wPieces) {
+        if (piece.pieceType === "k") king = piece;
       }
-    } else if (color === 'b') {
-      for (let i = 0; i < this.bPieces.length; i++) {
-        const piece = this.bPieces[i];
-        if (piece.pieceType === 'k') king = piece;
+    } else if (color === "b") {
+      for (const piece of bPieces) {
+        if (piece.pieceType === "k") king = piece;
       }
     }
 
@@ -230,43 +233,41 @@ function createBoard() {
     const isCurrentlyInCheck = this.isInCheck(color);
 
     if (validMoves.length === 0 && isCurrentlyInCheck) {
-      // TODO check if opponent's attacking piece(s) can be removed
       // Get all pieces attacking king
       const piecesAttackingKing = [];
       let allOpponentPieces;
       let defendingPieces;
-      if (color === 'w') {
+      if (color === "w") {
         defendingPieces = this.wPieces;
         allOpponentPieces = this.bPieces;
-      } else if (color === 'b') {
+      } else if (color === "b") {
         defendingPieces = this.bPieces;
         allOpponentPieces = this.wPieces;
       }
-      for (let i = 0; i < allOpponentPieces.length; i++) {
-        const piece = allOpponentPieces[i];
+      for (const piece of allOpponentPieces) {
         if (piece.isAttackingOpponentKing(this)) {
           piecesAttackingKing.push(piece);
         }
       }
       // Test if any friendly pieces can attack piecesAttackingKing
-      for (let i = 0; i < piecesAttackingKing.length; i++) {
-        const attackingPiece = piecesAttackingKing[i];
-        for (let j = 0; j < defendingPieces.length; j++) {
-          const defendingPiece = defendingPieces[j];
+      for (const attackingPiece of piecesAttackingKing) {
+        for (const defendingPiece of defendingPieces) {
           // If any dending piece can remove attack on king, no checkmate.
           const defendingPieceCanRemoveAttacker =
-              defendingPiece.isAttackingPosition(
-                  this, attackingPiece.position);
+            defendingPiece.isAttackingPosition(
+              this,
+              attackingPiece.position
+            );
           if (defendingPieceCanRemoveAttacker) {
             return false;
           }
         }
       }
 
-      if (king.color === 'w') {
+      if (king.color === "w") {
         this.wScore = -Infinity;
         this.bScore = Infinity;
-      } else if (king.color === 'b') {
+      } else if (king.color === "b") {
         this.bScore = -Infinity;
         this.wScore = Infinity;
       }
@@ -279,14 +280,25 @@ function createBoard() {
    * Prints the board to the console.
    */
   function printBoard() {
-    const {wScore, bScore} = this.getScore();
-    console.log(`bestMoveBoard scores: w: ${wScore} b: ${bScore}`);
-    const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-    const nums = ['8', '7', '6', '5', '4', '3', '2', '1'];
+    const { wScore, bScore } = this.getScore();
+    console.log(
+      `bestMoveBoard scores: w: ${wScore} b: ${bScore}`
+    );
+    const letters = [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+    ];
+    const nums = ["8", "7", "6", "5", "4", "3", "2", "1"];
     for (let i = 0; i < this.board.length; i++) {
-      console.log(nums[i], this.board[i].join(' '));
+      console.log(nums[i], this.board[i].join(" "));
     }
-    console.log(`   ${letters.join('    ')}`);
+    console.log(`   ${letters.join("    ")}`);
   }
 
   /**
@@ -297,19 +309,22 @@ function createBoard() {
   function removePiece(x, y) {
     // Update the scores when removing piece
     const removedPiece = this.board[x][y];
-    if (removedPiece !== '____' || removedPiece !== undefined) {
+    if (
+      removedPiece !== "____" ||
+      removedPiece !== undefined
+    ) {
       const removedPieceVal = removedPiece.pieceValue;
       const removedPieceColor = removedPiece.color;
-      if (removedPieceColor === 'w') {
+      if (removedPieceColor === "w") {
         this.wScore -= removedPieceVal;
         this.bScore += removedPieceVal;
-      } else if (removedPieceColor === 'b') {
+      } else if (removedPieceColor === "b") {
         this.wScore += removedPieceVal;
         this.bScore -= removedPieceVal;
       }
     }
 
-    this.board[x][y] = '____';
+    this.board[x][y] = "____";
 
     // Remove piece from the arrays
     this.wPieces.forEach((piece, idx) => {
