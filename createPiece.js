@@ -341,7 +341,6 @@ function createPiece(pieceType, color, x, y) {
     */
 
     const validMoves = [];
-    // TODO Refactor below, DRY.
 
     // Check pawn moves
     if (this.pieceType === "p") {

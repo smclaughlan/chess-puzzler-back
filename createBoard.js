@@ -252,7 +252,7 @@ function createBoard() {
       // Test if any friendly pieces can attack piecesAttackingKing
       for (const attackingPiece of piecesAttackingKing) {
         for (const defendingPiece of defendingPieces) {
-          // If any dending piece can remove attack on king, no checkmate.
+          // If any defending piece can remove attack on king, no checkmate.
           const defendingPieceCanRemoveAttacker =
             defendingPiece.isAttackingPosition(
               this,
