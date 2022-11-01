@@ -5,7 +5,6 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 // eslint-disable-next-line new-cap
-// const router = express.Router();
 const cors = require("cors");
 
 app.use(express.json());
